@@ -84,10 +84,16 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
             $height = 350;
         }
 
+        $url = str_replace('@VIDEO@',rawurlencode($vid),$this->sites[$site]);
+        $url = str_replace('@WIDTH@',$width,$url);
+        $url = str_replace('@HEIGHT@',$height,$url);
+        list(,$vars) = explode('?',$url,2);
+
         return array(
             'site'   => $site,
             'video'  => $vid,
-            'flash'  => str_replace('@VIDEO@',rawurlencode($vid),$this->sites[$site]),
+            'flash'  => $url,
+            'vars'   => $vars,
             'align'  => $align,
             'width'  => $width,
             'height' => $height
@@ -104,7 +110,25 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         if($data['align'] == 1) $R->doc .= '<div class="vshare__right">';
         if($data['align'] == 2) $R->doc .= '<div class="vshare__left">';
         if($data['align'] == 3) $R->doc .= '<div class="vshare__center">';
-        $R->doc .= sprintf('<object width="%d" height="%d"><param name="movie" value="%s"></param><param name="wmode" value="transparent"></param><embed src="%s" type="application/x-shockwave-flash" wmode="transparent" width="%d" height="%d"></embed></object>',$data['width'],$data['height'],$data['flash'],$data['flash'],$data['width'],$data['height']);
+        $R->doc .= sprintf('<object width="%d" height="%d">
+                                <param name="movie" value="%s"></param>
+                                <param name="wmode" value="transparent"></param>
+                                <param name="FlashVars" value="%s"></param>
+                                <embed src="%s"
+                                       type="application/x-shockwave-flash"
+                                       wmode="transparent"
+                                       width="%d"
+                                       height="%d"
+                                       FlashVars="%s"></embed>
+                            </object>',
+                            $data['width'],
+                            $data['height'],
+                            $data['flash'],
+                            $data['vars'],
+                            $data['flash'],
+                            $data['width'],
+                            $data['height'],
+                            $data['vars']);
         if($data['align']) $R->doc .= '</div>';
     }
 }
