@@ -19,7 +19,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2008-04-26',
+            'date'   => '2008-10-19',
             'name'   => 'Video Sharing Site Plugin',
             'desc'   => 'Easily embed videos from various Video Sharing sites. Example: {{youtube>XXXXXX}}',
             'url'    => 'http://wiki.splitbrain.org/plugin:vshare',
