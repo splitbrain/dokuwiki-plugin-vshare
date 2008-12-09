@@ -19,7 +19,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2008-10-19',
+            'date'   => '2008-12-09',
             'name'   => 'Video Sharing Site Plugin',
             'desc'   => 'Easily embed videos from various Video Sharing sites. Example: {{youtube>XXXXXX}}',
             'url'    => 'http://wiki.splitbrain.org/plugin:vshare',
@@ -114,9 +114,13 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
                                 <param name="movie" value="%s"></param>
                                 <param name="wmode" value="transparent"></param>
                                 <param name="FlashVars" value="%s"></param>
+                                <param name="allowFullScreen" value="true"/></param>
+                                <param name="allowScriptAccess" value="always"></param>
                                 <embed src="%s"
                                        type="application/x-shockwave-flash"
                                        wmode="transparent"
+                                       allowfullscreen="true"
+                                       allowscriptaccess="always"
                                        width="%d"
                                        height="%d"
                                        FlashVars="%s"></embed>
