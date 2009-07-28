@@ -19,7 +19,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         return array(
             'author' => 'Andreas Gohr',
             'email'  => 'andi@splitbrain.org',
-            'date'   => '2009-02-17',
+            'date'   => '2009-07-28',
             'name'   => 'Video Sharing Site Plugin',
             'desc'   => 'Easily embed videos from various Video Sharing sites. Example: {{youtube>XXXXXX}}',
             'url'    => 'http://wiki.splitbrain.org/plugin:vshare',
@@ -88,12 +88,14 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         $url = str_replace('@WIDTH@',$width,$url);
         $url = str_replace('@HEIGHT@',$height,$url);
         list(,$vars) = explode('?',$url,2);
+        $varr = array();
+        parse_str($vars,$varr);
 
         return array(
             'site'   => $site,
             'video'  => $vid,
             'flash'  => $url,
-            'vars'   => $vars,
+            'vars'   => $varr,
             'align'  => $align,
             'width'  => $width,
             'height' => $height
