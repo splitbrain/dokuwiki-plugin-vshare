@@ -43,6 +43,10 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
     function handle($match, $state, $pos, &$handler){
         $command = substr($match,2,-2);
 
+        // title
+        list($command,$title) = explode('|',$command);
+        $title = trim($title);
+
         // alignment
         $align = 0;
         if(substr($command,0,1) == ' ') $align += 1;
@@ -84,7 +88,8 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
             'vars'   => $varr,
             'align'  => $align,
             'width'  => $width,
-            'height' => $height
+            'height' => $height,
+            'title'  => $title
         );
     }
 
@@ -95,15 +100,19 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         if($mode != 'xhtml') return false;
         if(is_null($data)) return false;
 
-        if($data['align'] == 1) $R->doc .= '<div class="vshare__right">';
-        if($data['align'] == 2) $R->doc .= '<div class="vshare__left">';
-        if($data['align'] == 3) $R->doc .= '<div class="vshare__center">';
+        if($data['align'] == 0) $align = 'none';
+        if($data['align'] == 1) $align = 'right';
+        if($data['align'] == 2) $align = 'left';
+        if($data['align'] == 3) $align = 'center';
+        if($data['title']) $title = ' title="'.hsc($data['title']).'"';
+
+        $R->doc .= '<div class="vshare__'.$align.'"'.$title.'>';
         $R->doc .= html_flashobject(
                             $data['flash'],
                             $data['width'],
                             $data['height'],
                             $data['vars'],
                             $data['vars']);
-        if($data['align']) $R->doc .= '</div>';
+        $R->doc .= '</div>';
     }
 }
