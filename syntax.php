@@ -106,13 +106,33 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         if($data['align'] == 3) $align = 'center';
         if($data['title']) $title = ' title="'.hsc($data['title']).'"';
 
-        $R->doc .= '<div class="vshare__'.$align.'"'.$title.'>';
-        $R->doc .= html_flashobject(
-                            $data['flash'],
-                            $data['width'],
-                            $data['height'],
-                            $data['vars'],
-                            $data['vars']);
-        $R->doc .= '</div>';
+        if(is_a($R,'renderer_plugin_dw2pdf')){
+            // Output for PDF renderer
+            $R->doc .= '<div class="vshare__'.$align.'"
+                             width="'.$data['width'].'"
+                             height="'.$data['height'].'">';
+
+            $R->doc .= '<a href="'.$data['flash'].'" class="vshare">';
+            $R->doc .= '<img src="'.DOKU_BASE.'lib/plugins/vshare/video.png" />';
+            $R->doc .= '</a>';
+
+            $R->doc .= '<br />';
+
+            $R->doc .= '<a href="'.$data['flash'].'" class="vshare">';
+            $R->doc .= ($data['title'] ? hsc($data['title']) : 'Video');
+            $R->doc .= '</a>';
+
+            $R->doc .= '</div>';
+        }else{
+            // Normal output
+            $R->doc .= '<div class="vshare__'.$align.'"'.$title.'>';
+            $R->doc .= html_flashobject(
+                                $data['flash'],
+                                $data['width'],
+                                $data['height'],
+                                $data['vars'],
+                                $data['vars']);
+            $R->doc .= '</div>';
+        }
     }
 }
