@@ -9,6 +9,8 @@
 
 var sites = {
     'youtube':     'youtube\\.com/.*[&?]v=([a-z0-9_\\-]+)',
+    'vimeo':       'vimeo\\.com\\/(\\d+)',
+    'ustream':     'ustream\\.tv\\/recorded\\/(\\d+)\\/',
     '12seconds':   '12seconds\\.com\\/v\\/([a-z0-9_]+)',
     '5min':        '5min\\.com\\/Video/.*-([0-9]+)([&?]|$)',
     'clipfish':    'clipfishi\\.de\\/.*\\/video\\/([0-9])+\\/',
@@ -25,8 +27,6 @@ var sites = {
     'scivee':      'scivee\\.tv\\/node\\/(\\d+)',
     'sevenload':   'sevenload\\.com\\/.*\\/([a-z0-9]+)-[^\\/]*$',
     'stickam':     'stickam\\.com\\/viewMedia.do\\?mId=(\\d+)',
-    'ustream':     'ustream\\.tv\\/recorded\\/(\\d+)\\/',
-    'veoh':        'veoh\\.com\\/.*watch[^v]*(v[a-z0-9]+)',
-    'vimeo':       'vimeo\\.com\\/(\\d+)'
+    'veoh':        'veoh\\.com\\/.*watch[^v]*(v[a-z0-9]+)'
 };
 

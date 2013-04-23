@@ -78,9 +78,12 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
             $height = 350;
         }
 
-        $url = str_replace('@VIDEO@',rawurlencode($vid),$this->sites[$site]);
-        $url = str_replace('@WIDTH@',$width,$url);
-        $url = str_replace('@HEIGHT@',$height,$url);
+        list($type, $url) = explode(' ', $this->sites[$site], 2);
+        $url  = trim($url);
+        $type = trim($type);
+        $url  = str_replace('@VIDEO@',rawurlencode($vid),$url);
+        $url  = str_replace('@WIDTH@',$width,$url);
+        $url  = str_replace('@HEIGHT@',$height,$url);
         list(,$vars) = explode('?',$url,2);
         $varr = array();
         parse_str($vars,$varr);
@@ -88,12 +91,13 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         return array(
             'site'   => $site,
             'video'  => $vid,
-            'flash'  => $url,
+            'url'    => $url,
             'vars'   => $varr,
             'align'  => $align,
             'width'  => $width,
             'height' => $height,
-            'title'  => $title
+            'title'  => $title,
+            'type'   => $type
         );
     }
 
@@ -116,27 +120,43 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
                              width="'.$data['width'].'"
                              height="'.$data['height'].'">';
 
-            $R->doc .= '<a href="'.$data['flash'].'" class="vshare">';
+            $R->doc .= '<a href="'.$data['url'].'" class="vshare">';
             $R->doc .= '<img src="'.DOKU_BASE.'lib/plugins/vshare/video.png" />';
             $R->doc .= '</a>';
 
             $R->doc .= '<br />';
 
-            $R->doc .= '<a href="'.$data['flash'].'" class="vshare">';
+            $R->doc .= '<a href="'.$data['url'].'" class="vshare">';
             $R->doc .= ($data['title'] ? hsc($data['title']) : 'Video');
             $R->doc .= '</a>';
 
             $R->doc .= '</div>';
         }else{
             // Normal output
-            $R->doc .= '<div class="vshare__'.$align.'"'.$title.'>';
-            $R->doc .= html_flashobject(
-                                $data['flash'],
-                                $data['width'],
-                                $data['height'],
-                                $data['vars'],
-                                $data['vars']);
-            $R->doc .= '</div>';
+            if($data['type'] == 'flash') {
+                // embed flash
+                $R->doc .= '<div class="vshare__'.$align.'"'.$title.'>';
+                $R->doc .= html_flashobject(
+                                    $data['url'],
+                                    $data['width'],
+                                    $data['height'],
+                                    $data['vars'],
+                                    $data['vars']);
+                $R->doc .= '</div>';
+            }else{
+                // embed iframe
+                $R->doc .= '<iframe ';
+                $R->doc .= buildAttributes(array(
+                            'src' => $data['url'],
+                            'height' => $data['height'],
+                            'width'  => $data['width'],
+                            'class'  => 'vshare__'.$align,
+                            'allowfullscreen' => '',
+                            'frameborder' => 0,
+                            'scrolling' => 'no'
+                           ));
+                $R->doc .= '>'.hsc($data['title']).'</iframe>';
+            }
         }
     }
 }
