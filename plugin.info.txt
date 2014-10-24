@@ -1,8 +1,8 @@
 base    vshare
 author  Andreas Gohr
 email   andi@splitbrain.org
-date    2013-10-22
+date    2014-10-24
 name    Video Sharing Site Plugin
 desc    Easily embed videos from various Video Sharing sites. Example: {{youtube>XXXXXX}}
-url     http://www.dokuwiki.org/plugin:vshare
+url     https://www.dokuwiki.org/plugin:vshare
 
