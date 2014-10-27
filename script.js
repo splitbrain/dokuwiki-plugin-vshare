@@ -5,7 +5,7 @@
 if(window.toolbar != undefined){
     toolbar[toolbar.length] = {"type":  "pluginvshare",
                                "title": LANG['plugins']['vshare']['button'],
-                               "icon":  DOKU_BASE+"lib/plugins/vshare/button.png",
+                               "icon":  "../../plugins/vshare/button.png",
                                "key":   ""};
 }
 
