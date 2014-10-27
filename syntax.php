@@ -78,12 +78,44 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
             $height = 350;
         }
 
+        $paramm = array();
+        parse_str($param, $paramm);
+        $urlparam = array();
+        foreach($paramm as $key => $value) {
+            switch($key) {
+                case 'rel':
+                case 'autoplay':
+                    if($paramm[$key] === '1' || $paramm[$key] === '0') {
+                        $urlparam[] = $key . '=' . $paramm[$key];
+                    }
+                    break;
+                case 'start':
+                case 'end':
+                case 'chapter_id': //for twitch.tv
+                case 'initial_time':
+                    $number = (int) $paramm[$key];
+                    if($number > 0) {
+                        $urlparam[] = $key . '=' . $number;
+                    }
+                    break;
+            }
+        }
+
         list($type, $url) = explode(' ', $this->sites[$site], 2);
         $url  = trim($url);
         $type = trim($type);
         $url  = str_replace('@VIDEO@',rawurlencode($vid),$url);
         $url  = str_replace('@WIDTH@',$width,$url);
         $url  = str_replace('@HEIGHT@',$height,$url);
+        if(count($urlparam)) {
+            if(strpos($url, '?') !== false) {
+                $sepchar = '&';
+            } else {
+                $sepchar = '?';
+            }
+            $url .= $sepchar . implode('&', $urlparam);
+        }
+
         list(,$vars) = explode('?',$url,2);
         $varr = array();
         parse_str($vars,$varr);

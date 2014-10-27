@@ -19,6 +19,7 @@ var sites = {
     'myspacetv':   'vids\\.myspace\\.com\\/.*videoid=(\\d+)',
     'rcmovie':     'rcmovie\\.de\\/video\\/([a-f0-9]+)\\/',
     'scivee':      'scivee\\.tv\\/node\\/(\\d+)',
+    'twitchtv':    'twitch\\.tv\\/([a-z0-9_\\-]+)',
     'veoh':        'veoh\\.com\\/.*watch[^v]*(v[a-z0-9]+)'
 };
 
