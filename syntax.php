@@ -85,6 +85,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
             switch($key) {
                 case 'rel':
                 case 'autoplay':
+                case 'ap':
                     if($paramm[$key] === '1' || $paramm[$key] === '0') {
                         $urlparam[] = $key . '=' . $paramm[$key];
                     }
@@ -93,9 +94,16 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
                 case 'end':
                 case 'chapter_id': //for twitch.tv
                 case 'initial_time':
+                case 'offsetTime':
+                case 'startSlide':
                     $number = (int) $paramm[$key];
                     if($number > 0) {
                         $urlparam[] = $key . '=' . $number;
+                    }
+                    break;
+                case 'auto_start':
+                    if($paramm[$key] === 'true' || $paramm[$key] === 'false') {
+                        $urlparam[] = $key . '=' . $paramm[$key];
                     }
                     break;
             }

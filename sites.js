@@ -19,7 +19,12 @@ var sites = {
     'myspacetv':   'vids\\.myspace\\.com\\/.*videoid=(\\d+)',
     'rcmovie':     'rcmovie\\.de\\/video\\/([a-f0-9]+)\\/',
     'scivee':      'scivee\\.tv\\/node\\/(\\d+)',
-    'twitchtv':    'twitch\\.tv\\/([a-z0-9_\\-]+)',
-    'veoh':        'veoh\\.com\\/.*watch[^v]*(v[a-z0-9]+)'
+    'twitchtv':    'twitch\\.tv\\/([a-z0-9_\\-]+)(?:\\/c\\/(\\d+))?',
+    'veoh':        'veoh\\.com\\/.*watch[^v]*(v[a-z0-9]+)',
+    'bambuser':    'bambuser\\.com\\/v\\/(\\d+)',
+    'bliptv':      '(?:blip\\.tv\\/play\\/([a-zA-Z0-9]+\\.(?:html|x))\\?p=1|(http?\\:\\/\\/blip\\.tv\\/(?!play)(?:[a-zA-Z0-9_\\-]+)\\/(?:[a-zA-Z0-9_\\-]+)))',
+    'break':       'break\\.com\\/video\\/(?:(?:[a-z]+)\\/)?(?:[a-z\\-]+)-([0-9]+)',
+    'viddler':     'viddler\\.com\\/(?:embed|v)\\/([a-z0-9]{8})',
+    'slideshare':  '(?:(?:slideshare\\.net\\/slideshow\\/embed_code\\/|id=)([0-9]+)|(https?\\:\\/\\/www\\.slideshare\\.net\\/(?:[a-zA-Z0-9_\\-]+)\\/(?:[a-zA-Z0-9_\\-]+)))'
 };
 
