@@ -172,6 +172,13 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
 
             $R->doc .= '</div>';
         }else{
+            // use redirector for HTTP embeds on SSL sites
+            if(is_ssl() && substr($data['url'], 0, 7) == 'http://') {
+                $data['url'] = DOKU_BASE.'lib/plugins/vshare/redir.php'.
+                               '?url='.rawurlencode($data['url']).
+                               '&hash='.md5(auth_cookiesalt().'vshare'.$data['url']);
+            }
+
             // Normal output
             if($data['type'] == 'flash') {
                 // embed flash
