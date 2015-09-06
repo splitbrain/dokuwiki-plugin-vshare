@@ -18,3 +18,7 @@ div.vshare__center {
     display: block;
 }
 
+iframe.vshare__none,
+div.vshare__none {
+margin: 1px 3px 1px 3px;
+}
