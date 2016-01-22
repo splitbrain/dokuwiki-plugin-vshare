@@ -44,7 +44,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
     /**
      * Parse the parameters
      */
-    function handle($match, $state, $pos, &$handler){
+    function handle($match, $state, $pos, Doku_Handler $handler){
         $command = substr($match,2,-2);
 
         // title
@@ -144,7 +144,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
     /**
      * Render the flash player
      */
-    function render($mode, &$R, $data){
+    function render($mode, Doku_Renderer $R, $data){
         if($mode != 'xhtml') return false;
         if(is_null($data)) return false;
 
