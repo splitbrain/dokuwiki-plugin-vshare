@@ -26,6 +26,7 @@ var sites = {
     'break':       'break\\.com\\/video\\/(?:(?:[a-z]+)\\/)?(?:[a-z\\-]+)-([0-9]+)',
     'viddler':     'viddler\\.com\\/(?:embed|v)\\/([a-z0-9]{8})',
     'msoffice':         '(?:office\\.com.*[&?]videoid=([a-z0-9\\-]+))',
-    'slideshare':  '(?:(?:slideshare\\.net\\/slideshow\\/embed_code\\/|id=)([0-9]+)|(https?\\:\\/\\/www\\.slideshare\\.net\\/(?:[a-zA-Z0-9_\\-]+)\\/(?:[a-zA-Z0-9_\\-]+)))'
+    'slideshare':  '(?:(?:slideshare\\.net\\/slideshow\\/embed_code\\/|id=)([0-9]+)|(https?\\:\\/\\/www\\.slideshare\\.net\\/(?:[a-zA-Z0-9_\\-]+)\\/(?:[a-zA-Z0-9_\\-]+)))',
+    'archive':     'archive\\.org\\/embed\\/([a-zA-Z0-9_\\-]+)'
 };
 
