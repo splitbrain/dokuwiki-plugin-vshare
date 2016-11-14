@@ -27,6 +27,10 @@ var sites = {
     'viddler':     'viddler\\.com\\/(?:embed|v)\\/([a-z0-9]{8})',
     'msoffice':    '(?:office\\.com.*[&?]videoid=([a-z0-9\\-]+))',
     'slideshare':  '(?:(?:slideshare\\.net\\/slideshow\\/embed_code\\/|id=)([0-9]+)|(https?\\:\\/\\/www\\.slideshare\\.net\\/(?:[a-zA-Z0-9_\\-]+)\\/(?:[a-zA-Z0-9_\\-]+)))',
-    'archiveorg':  'archive\\.org\\/embed\\/([a-zA-Z0-9_\\-]+)'
+    'archiveorg':  'archive\\.org\\/embed\\/([a-zA-Z0-9_\\-]+)',
+    'niconico':    'nicovideo\\.jp/watch/(sm[0-9]+)',
+    'youku':       'v\\.youku\\.com/v_show/id_([[0-9A-Za-z]]+)\\.html',
+    'tudou':       'tudou\\.com/programs/view/([0-9A-Za-z]+)',
+    'bilibili':    'bilibili\\.com/video/av([0-9])+/'
 };
 
