@@ -151,10 +151,14 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         if($mode != 'xhtml') return false;
         if(is_null($data)) return false;
 
-        if($data['align'] == 0) $align = 'none';
-        if($data['align'] == 1) $align = 'right';
-        if($data['align'] == 2) $align = 'left';
-        if($data['align'] == 3) $align = 'center';
+		if($data['width'] == "100%") {
+			$align = 'responsive';
+		} else {
+			if($data['align'] == 0) $align = 'none';
+			if($data['align'] == 1) $align = 'right';
+			if($data['align'] == 2) $align = 'left';
+			if($data['align'] == 3) $align = 'center';
+		}
         if($data['title']) $title = ' title="'.hsc($data['title']).'"';
 
         if(is_a($R,'renderer_plugin_dw2pdf')){
@@ -195,8 +199,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
                 $R->doc .= '</div>';
             }else{
                 // embed iframe
-				if($data['width'] == "100%") {
-					$align = 'responsive';
+				if($align == 'responsive') {
 					$R->doc .= '<div class="vshare__'.$align.'"><iframe ';
 					$R->doc .= buildAttributes(array(
                             'src' => $data['url'],
