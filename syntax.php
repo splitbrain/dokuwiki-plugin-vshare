@@ -83,6 +83,9 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         $urlparam = array();
         foreach($paramm as $key => $value) {
             switch($key) {
+                case 'list':
+                    $urlparam[] = $key . '=' . $paramm[$key];
+                    break;
                 case 'rel':
                 case 'autoplay':
                 case 'ap':
