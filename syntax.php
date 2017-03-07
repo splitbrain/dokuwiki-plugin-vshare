@@ -84,7 +84,9 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         foreach($paramm as $key => $value) {
             switch($key) {
                 case 'list':
-                    $urlparam[] = $key . '=' . $paramm[$key];
+                    if(is_string($value)) { 
+                        $urlparam[] = $key . '=' . $value;
+                    }
                     break;
                 case 'rel':
                 case 'autoplay':
