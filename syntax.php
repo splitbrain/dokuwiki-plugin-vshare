@@ -84,7 +84,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         foreach($paramm as $key => $value) {
             switch($key) {
                 case 'list':
-                    if(preg_match('/(\w|-)+/',$value)) { 
+                    if(preg_match('/^[-\w]+$/',$value)) { 
                         $urlparam[] = $key . '=' . $value;
                     }
                     break;
