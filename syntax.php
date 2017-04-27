@@ -16,7 +16,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
      * Constructor.
      * Intitalizes the supported video sites
      */
-    function syntax_plugin_vshare(){
+    function __construct(){
         $this->sites =  confToHash(dirname(__FILE__).'/sites.conf');
     }
 
