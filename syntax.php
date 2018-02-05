@@ -69,13 +69,13 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
             $height = $m[2];
         }elseif(strpos($param,'small') !== false){      // small
             $width  = 255;
-            $height = 210;
+            $height = 143;
         }elseif(strpos($param,'large') !== false){      // large
             $width  = 520;
-            $height = 406;
+            $height = 293;
         }else{                                          // medium
             $width  = 425;
-            $height = 350;
+            $height = 239;
         }
 
         $paramm = array();
