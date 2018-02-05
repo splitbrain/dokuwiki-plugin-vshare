@@ -22,3 +22,17 @@ iframe.vshare__none,
 div.vshare__none {
 margin: 1px 3px 1px 3px;
 }
+
+div.vshare__responsive {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+iframe.vshare__responsive {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}

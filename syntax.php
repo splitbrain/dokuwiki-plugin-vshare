@@ -73,6 +73,9 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         }elseif(strpos($param,'large') !== false){      // large
             $width  = 520;
             $height = 406;
+		}elseif(strpos($param,'responsive') !== false){      // responsive
+            $width  = "100%";
+            $height = "100%";
         }else{                                          // medium
             $width  = 425;
             $height = 350;
@@ -153,10 +156,14 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
         if($mode != 'xhtml') return false;
         if(is_null($data)) return false;
 
-        if($data['align'] == 0) $align = 'none';
-        if($data['align'] == 1) $align = 'right';
-        if($data['align'] == 2) $align = 'left';
-        if($data['align'] == 3) $align = 'center';
+		if($data['width'] == "100%") {
+			$align = 'responsive';
+		} else {
+			if($data['align'] == 0) $align = 'none';
+			if($data['align'] == 1) $align = 'right';
+			if($data['align'] == 2) $align = 'left';
+			if($data['align'] == 3) $align = 'center';
+		}
         if($data['title']) $title = ' title="'.hsc($data['title']).'"';
 
         if(is_a($R,'renderer_plugin_dw2pdf')){
@@ -197,8 +204,20 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
                 $R->doc .= '</div>';
             }else{
                 // embed iframe
-                $R->doc .= '<iframe ';
-                $R->doc .= buildAttributes(array(
+				if($align == 'responsive') {
+					$R->doc .= '<div class="vshare__'.$align.'"><iframe ';
+					$R->doc .= buildAttributes(array(
+                            'src' => $data['url'],
+                            'height' => $data['height'],
+                            'width'  => $data['width'],
+                            'class'  => 'vshare__'.$align,
+                            'allowfullscreen' => '',
+                            'frameborder' => 0,
+                           ));
+					$R->doc .= '>'.hsc($data['title']).'</iframe></div>';
+				} else {
+					$R->doc .= '<iframe ';
+					$R->doc .= buildAttributes(array(
                             'src' => $data['url'],
                             'height' => $data['height'],
                             'width'  => $data['width'],
@@ -207,7 +226,8 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin {
                             'frameborder' => 0,
                             'scrolling' => 'no'
                            ));
-                $R->doc .= '>'.hsc($data['title']).'</iframe>';
+					$R->doc .= '>'.hsc($data['title']).'</iframe>';
+					}
             }
         }
     }
