@@ -32,6 +32,7 @@ var sites = {
     'youku':       'v\\.youku\\.com/v_show/id_([[0-9A-Za-z]]+)\\.html',
     'tudou':       'tudou\\.com/programs/view/([0-9A-Za-z]+)',
     'bilibili':    'bilibili\\.com/video/av([0-9])+/',
-    'bitchute':    'bitchute\\.com\\/video\\/([a-zA-Z0-9_\\-]+)'
+    'bitchute':    'bitchute\\.com\\/video\\/([a-zA-Z0-9_\\-]+)',
+    'coub':        'coub\\.com\\/view\\/([a-zA-Z0-9_\\-]+)'
 };
 
