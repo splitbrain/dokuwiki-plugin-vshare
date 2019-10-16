@@ -31,6 +31,7 @@ var sites = {
     'niconico':    'nicovideo\\.jp/watch/(sm[0-9]+)',
     'youku':       'v\\.youku\\.com/v_show/id_([[0-9A-Za-z]]+)\\.html',
     'tudou':       'tudou\\.com/programs/view/([0-9A-Za-z]+)',
-    'bilibili':    'bilibili\\.com/video/av([0-9])+/'
+    'bilibili':    'bilibili\\.com/video/av([0-9])+/',
+    'coub':        'coub\\.com/.*/([a-z0-9]+)'
 };
 
