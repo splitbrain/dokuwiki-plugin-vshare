@@ -33,6 +33,7 @@ var sites = {
     'tudou':       'tudou\\.com/programs/view/([0-9A-Za-z]+)',
     'bilibili':    'bilibili\\.com/video/(BV[0-9A-Za-z]+)',
     'bitchute':    'bitchute\\.com\\/video\\/([a-zA-Z0-9_\\-]+)',
-    'coub':        'coub\\.com\\/view\\/([a-zA-Z0-9_\\-]+)'
+    'coub':        'coub\\.com\\/view\\/([a-zA-Z0-9_\\-]+)',
+    'odysee':      'odysee\\.com\\/$\\/embed\\/([-%_?=/a-zA-Z0-9]+)'
 };
 
