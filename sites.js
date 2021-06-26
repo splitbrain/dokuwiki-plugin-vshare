@@ -30,9 +30,9 @@ var sites = {
     'slideshare':  '(?:(?:slideshare\\.net\\/slideshow\\/embed_code\\/|id=)([0-9]+)|(https?\\:\\/\\/www\\.slideshare\\.net\\/(?:[a-zA-Z0-9_\\-]+)\\/(?:[a-zA-Z0-9_\\-]+)))',
     'archiveorg':  'archive\\.org\\/embed\\/([a-zA-Z0-9_\\-]+)',
     'niconico':    'nicovideo\\.jp/watch/(sm[0-9]+)',
-    'youku':       'v\\.youku\\.com/v_show/id_([[0-9A-Za-z]]+)\\.html',
+    'youku':       'v\\.youku\\.com/v_show/id_([0-9A-Za-z=]+)\\.html',
     'tudou':       'tudou\\.com/programs/view/([0-9A-Za-z]+)',
-    'bilibili':    'bilibili\\.com/video/av([0-9])+/',
+    'bilibili':    'bilibili\\.com/video/(BV[0-9A-Za-z]+)',
     'bitchute':    'bitchute\\.com\\/video\\/([a-zA-Z0-9_\\-]+)',
     'coub':        'coub\\.com\\/view\\/([a-zA-Z0-9_\\-]+)',
     'odysee':      'odysee\\.com\\/$\\/embed\\/([-%_?=/a-zA-Z0-9]+)'
