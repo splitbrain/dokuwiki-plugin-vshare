@@ -1,3 +1,7 @@
+.vshare {
+    aspect-ratio: 16/9;
+}
+
 iframe.vshare__left,
 div.vshare__left {
     float: left;

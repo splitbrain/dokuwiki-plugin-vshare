@@ -14,8 +14,8 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
         'small' => [255, 143],
         'medium' => [425, 239],
         'large' => [520, 293],
-        'full' => ['100%', '100%'],
-        'half' => ['100%', '100%'],
+        'full' => ['100%', ''],
+        'half' => ['50%', ''],
     ];
 
     protected $alignments = [
@@ -130,7 +130,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
                 'src' => $data['url'],
                 'height' => $data['height'],
                 'width' => $data['width'],
-                'class' => 'vshare__' . $data['align'],
+                'class' => 'vshare vshare__' . $data['align'],
                 'allowfullscreen' => '',
                 'frameborder' => 0,
                 'scrolling' => 'no',
@@ -146,7 +146,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
      */
     public function pdf($data)
     {
-        $html = '<div class="vshare__' . $data['align'] . '"
+        $html = '<div class="vshare vshare__' . $data['align'] . '"
                       width="' . $data['width'] . '"
                       height="' . $data['height'] . '">';
 
