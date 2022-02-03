@@ -95,6 +95,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
 
         return array(
             'site' => $site,
+            'domain' => parse_url($url, PHP_URL_HOST),
             'video' => $vid,
             'url' => $url,
             'align' => $this->alignments[$align],
@@ -113,7 +114,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
         if (is_a($R, 'renderer_plugin_dw2pdf')) {
             $R->doc .= $this->pdf($data);
         } else {
-            $R->doc .= $this->iframe($data);
+            $R->doc .= $this->iframe($data, $this->getConf('gdpr') ? 'div' : 'iframe');
         }
         return true;
     }
@@ -121,21 +122,48 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
     /**
      * Prepare the HTML for output of the embed iframe
      * @param array $data
+     * @param string $element Can be used to not directly embed the iframe
      * @return string
      */
-    public function iframe($data)
+    public function iframe($data, $element = 'iframe')
     {
-        return '<iframe '
+        return "<$element "
             . buildAttributes(array(
                 'src' => $data['url'],
-                'height' => $data['height'],
                 'width' => $data['width'],
+                'height' => $data['height'],
+                'style' => $this->sizeToStyle($data['width'], $data['height']),
                 'class' => 'vshare vshare__' . $data['align'],
                 'allowfullscreen' => '',
                 'frameborder' => 0,
                 'scrolling' => 'no',
+                'data-domain' => $data['domain'],
             ))
-            . '>' . hsc($data['title']) . '</iframe>';
+            . '><h3>' . hsc($data['title']) . "</h3></$element>";
+    }
+
+    /**
+     * Create a style attribute for the given size
+     *
+     * @param int|string $width
+     * @param int|string $height
+     * @return string
+     */
+    public function sizeToStyle($width, $height)
+    {
+        // no unit? use px
+        if ($width && $width == (int)$width) {
+            $width = $width . 'px';
+        }
+        // no unit? use px
+        if ($height && $height == (int)$height) {
+            $height = $height . 'px';
+        }
+
+        $style = '';
+        if ($width) $style .= 'width:' . $width . ';';
+        if ($height) $style .= 'height:' . $height . ';';
+        return $style;
     }
 
     /**

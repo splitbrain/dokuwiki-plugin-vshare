@@ -2,6 +2,21 @@
     aspect-ratio: 16/9;
 }
 
+div.vshare {
+    box-sizing: border-box;
+    border: 1px solid __border__;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    background-image: url(video.svg);
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 5em 5em;
+}
+
 iframe.vshare__left,
 div.vshare__left {
     float: left;

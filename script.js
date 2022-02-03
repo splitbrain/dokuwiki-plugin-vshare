@@ -1,7 +1,7 @@
 /**
  * Append a toolbar button
  */
-if (window.toolbar != undefined) {
+if (window.toolbar !== undefined) {
     toolbar[toolbar.length] = {
         "type": "pluginvshare",
         "title": LANG['plugins']['vshare']['button'],
@@ -16,29 +16,31 @@ if (window.toolbar != undefined) {
  */
 function tb_pluginvshare(btn, props, edid) {
     PluginVShare.edid = edid;
-
     PluginVShare.buildSyntax();
 }
 
-var PluginVShare = {
+const PluginVShare = {
     edid: null,
 
+    /**
+     * Ask for URL, extract data and create syntax
+     */
     buildSyntax: function () {
 
-        var text = prompt(LANG['plugins']['vshare']['prompt']);
+        const text = prompt(LANG['plugins']['vshare']['prompt']);
         if (!text) return;
 
         // This includes the site patterns:
         /* DOKUWIKI:include sites.js */
 
-        for (var key in sites) {
+        for (let key in sites) {
 
             if (sites.hasOwnProperty(key)) {
-                var RE = new RegExp(sites[key], 'i');
-                var match = text.match(RE);
+                const RE = new RegExp(sites[key], 'i');
+                const match = text.match(RE);
                 if (match) {
-                    var urlparam = '';
-                    var videoid = match[1];
+                    let urlparam = '';
+                    let videoid = match[1];
 
                     switch (key) {
                         case 'slideshare':
@@ -53,7 +55,7 @@ var PluginVShare = {
                                         format: 'jsonp'
                                     }
                                 }).done(function (response, status, error) {
-                                    var videoid = response.slideshow_id;
+                                    const videoid = response.slideshow_id;
                                     PluginVShare.insert(key, videoid, urlparam);
                                 }).fail(function (data, status, error) {
                                     /* http://www.slideshare.net/developers/oembed
@@ -67,35 +69,9 @@ var PluginVShare = {
                                 return;
                             }
                             break;
-                        case 'bliptv':
-                            //provided video url?
-                            if (match[2]) {
-
-                                jQuery.ajax({
-                                    url: '//blip.tv/oembed/',
-                                    dataType: 'jsonp',
-                                    data: {
-                                        url: match[2],
-                                        format: 'json'
-                                    },
-                                    timeout: 2000
-                                }).done(function (response, status, error) {
-                                    var videoidmatch = response.html.match(RE);
-                                    PluginVShare.insert(key, videoidmatch[1], urlparam);
-                                }).fail(function (data, status, error) {
-                                    /*
-                                     * If url is not found(=wrong numerical number on end), blip.tv returns a 404
-                                     * because jsonp is not a xmlhttprequest, there is no 404 catched
-                                     * errors are detected by waiting at the timeout
-                                     */
-                                    alert(LANG['plugins']['vshare']['notfound']);
-                                });
-                                return;
-                            }
-                            break;
                         case 'twitchtv':
                             if (match[2]) {
-                                urlparam = '&chapter_id=' + match[2];
+                                urlparam = 'chapter_id=' + match[2];
                             }
                             break;
                     }
@@ -109,9 +85,47 @@ var PluginVShare = {
         alert(LANG['plugins']['vshare']['notfound']);
     },
 
-    insert: function (key, videoid, urlparam, edid) {
-        var code = '{{' + key + '>' + videoid + '?medium' + urlparam + '}}';
+    /**
+     * Insert the syntax in the editor
+     *
+     * @param {string} key
+     * @param {string} videoid
+     * @param {string} urlparam
+     */
+    insert: function (key, videoid, urlparam) {
+        var code = '{{' + key + '>' + videoid + '?' + urlparam + '}}';
         insertAtCarret(PluginVShare.edid, code);
+    },
+
+    /**
+     * Allow loading videos on click
+     */
+    attachGDPRHandler: function () {
+        const $videos = jQuery('div.vshare');
+
+        // add click handler
+        $videos.on('click', function () {
+            // create an iframe and copy over the attributes
+            const iframe = document.createElement('iframe');
+            let attr;
+            let attributes = Array.prototype.slice.call(this.attributes);
+            while(attr = attributes.pop()) {
+                iframe.setAttribute(attr.nodeName, attr.nodeValue);
+            }
+            // replace the div with the iframe
+            this.replaceWith(iframe);
+        });
+
+        // add info text
+        $videos.each(function (){
+            const $self = jQuery(this);
+            const info = document.createElement('p');
+            info.innerText = LANG.plugins.vshare.click.replace('%s', $self.data('domain'));
+            $self.append(info);
+        });
     }
 };
 
+jQuery(function () {
+    PluginVShare.attachGDPRHandler();
+});
