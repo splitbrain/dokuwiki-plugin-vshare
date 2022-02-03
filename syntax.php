@@ -206,7 +206,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
     {
         global $INPUT;
         $url = str_replace('@VIDEO@', rawurlencode($vid), $url);
-        $url = str_replace('@DOMAIN@', rawurlencode($INPUT->str('HTTP_HOST')), $url);
+        $url = str_replace('@DOMAIN@', rawurlencode($INPUT->server->str('HTTP_HOST')), $url);
         $url = str_replace('@WIDTH@', $width, $url);
         $url = str_replace('@HEIGHT@', $height, $url);
 
