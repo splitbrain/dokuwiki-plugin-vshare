@@ -6,7 +6,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
+class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
 {
     protected $sites;
 
@@ -31,7 +31,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
      */
     public function __construct()
     {
-        $this->sites = parse_ini_file(__DIR__ . '/sites.ini', true, INI_SCANNER_RAW);
+        $this->sites = helper_plugin_vshare::loadSites();
     }
 
     /** @inheritdoc */
@@ -56,7 +56,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
     public function connectTo($mode)
     {
         $pattern = join('|', array_keys($this->sites));
-        $this->Lexer->addSpecialPattern('\{\{\s?(?:' . $pattern . ')>[^}]*\}\}', $mode, 'plugin_vshare');
+        $this->Lexer->addSpecialPattern('\{\{\s?(?:' . $pattern . ')>[^}]*\}\}', $mode, 'plugin_vshare_video');
     }
 
     /** @inheritdoc */

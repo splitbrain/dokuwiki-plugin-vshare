@@ -5,12 +5,12 @@ namespace dokuwiki\plugin\vshare\test;
 use DokuWikiTest;
 
 /**
- * FIXME tests for the vshare plugin
+ * syntax handling tests for the vshare plugin
  *
  * @group plugin_vshare
  * @group plugins
  */
-class SyntaxTest extends DokuWikiTest
+class VideoSyntaxTest extends DokuWikiTest
 {
 
     /**
@@ -41,7 +41,7 @@ class SyntaxTest extends DokuWikiTest
      */
     public function testParseSize($input, $ewidth, $eheight, $eparams = [])
     {
-        $syntax = new \syntax_plugin_vshare();
+        $syntax = new \syntax_plugin_vshare_video();
         parse_str($input, $params);
         list($width, $height) = $syntax->parseSize($params);
 
@@ -93,7 +93,7 @@ class SyntaxTest extends DokuWikiTest
      */
     public function testHandle($input, $expect)
     {
-        $syntax = new \syntax_plugin_vshare();
+        $syntax = new \syntax_plugin_vshare_video();
         $result = $syntax->handle($input, DOKU_LEXER_MATCHED, 0, new \Doku_Handler());
         $this->assertEquals($expect, $result);
     }

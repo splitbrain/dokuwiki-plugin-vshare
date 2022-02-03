@@ -7,4 +7,5 @@
 
 
 $meta['gdpr'] = array('onoff');
+$meta['debug'] = array('onoff');
 

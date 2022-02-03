@@ -5,17 +5,20 @@ namespace dokuwiki\plugin\vshare\test;
 use DokuWikiTest;
 
 /**
- * FIXME tests for the vshare plugin
+ * site configuration tests for the vshare plugin
  *
  * @group plugin_vshare
  * @group plugins
  */
 class SitesTest extends DokuWikiTest
 {
-
+    /**
+     * @see testPlaceholder
+     * @see testRegEx
+     */
     public function provideSites()
     {
-        $sites = parse_ini_file(__DIR__ . '/../sites.ini', true, INI_SCANNER_RAW);
+        $sites = \helper_plugin_vshare::loadSites();
         foreach ($sites as $site => $data) {
             yield [$site, $data];
         }

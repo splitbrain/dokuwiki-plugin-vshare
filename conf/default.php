@@ -5,5 +5,6 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
-$conf['gdpr']    = 0;
+$conf['gdpr'] = 0;
+$conf['debug'] = 0;
 
