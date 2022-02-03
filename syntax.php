@@ -110,29 +110,23 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
         if ($mode != 'xhtml') return false;
         if (is_null($data)) return false;
 
-        if ($data['title']) $title = ' title="' . hsc($data['title']) . '"';
-
         if (is_a($R, 'renderer_plugin_dw2pdf')) {
-            // Output for PDF renderer
-            $R->doc .= '<div class="vshare__' . $data['align'] . '"
-                             width="' . $data['width'] . '"
-                             height="' . $data['height'] . '">';
-
-            $R->doc .= '<a href="' . $data['url'] . '" class="vshare">';
-            $R->doc .= '<img src="' . DOKU_BASE . 'lib/plugins/vshare/video.png" />';
-            $R->doc .= '</a>';
-
-            $R->doc .= '<br />';
-
-            $R->doc .= '<a href="' . $data['url'] . '" class="vshare">';
-            $R->doc .= ($data['title'] ? hsc($data['title']) : 'Video');
-            $R->doc .= '</a>';
-
-            $R->doc .= '</div>';
+            $R->doc .= $this->pdf($data);
         } else {
-            // embed iframe
-            $R->doc .= '<iframe ';
-            $R->doc .= buildAttributes(array(
+            $R->doc .= $this->iframe($data);
+        }
+        return true;
+    }
+
+    /**
+     * Prepare the HTML for output of the embed iframe
+     * @param array $data
+     * @return string
+     */
+    public function iframe($data)
+    {
+        return '<iframe '
+            . buildAttributes(array(
                 'src' => $data['url'],
                 'height' => $data['height'],
                 'width' => $data['width'],
@@ -140,9 +134,35 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
                 'allowfullscreen' => '',
                 'frameborder' => 0,
                 'scrolling' => 'no',
-            ));
-            $R->doc .= '>' . hsc($data['title']) . '</iframe>';
-        }
+            ))
+            . '>' . hsc($data['title']) . '</iframe>';
+    }
+
+    /**
+     * Prepare the HTML for output in PDF exports
+     *
+     * @param array $data
+     * @return string
+     */
+    public function pdf($data)
+    {
+        $html = '<div class="vshare__' . $data['align'] . '"
+                      width="' . $data['width'] . '"
+                      height="' . $data['height'] . '">';
+
+        $html .= '<a href="' . $data['url'] . '" class="vshare">';
+        $html .= '<img src="' . DOKU_BASE . 'lib/plugins/vshare/video.png" />';
+        $html .= '</a>';
+
+        $html .= '<br />';
+
+        $html .= '<a href="' . $data['url'] . '" class="vshare">';
+        $html .= ($data['title'] ? hsc($data['title']) : 'Video');
+        $html .= '</a>';
+
+        $html .= '</div>';
+
+        return $html;
     }
 
     /**
