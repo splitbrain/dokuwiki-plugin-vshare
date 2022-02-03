@@ -10,6 +10,21 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
 {
     protected $sites;
 
+    protected $sizes = [
+        'small' => [255, 143],
+        'medium' => [425, 239],
+        'large' => [520, 293],
+        'full' => ['100%', '100%'],
+        'half' => ['100%', '100%'],
+    ];
+
+    protected $alignments = [
+        0 => 'none',
+        1 => 'right',
+        2 => 'left',
+        3 => 'center',
+    ];
+
     /**
      * Constructor.
      * Intitalizes the supported video sites
@@ -50,7 +65,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
         $command = substr($match, 2, -2);
 
         // title
-        list($command, $title) = explode('|', $command);
+        list($command, $title) = array_pad(explode('|', $command), 2, '');
         $title = trim($title);
 
         // alignment
@@ -65,87 +80,27 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
         if (!$vid) return null; // no video!?
 
         // what size?
-        list($vid, $param) = explode('?', $vid, 2);
-        if (preg_match('/(\d+)x(\d+)/i', $param, $m)) {     // custom
-            $width = $m[1];
-            $height = $m[2];
-        } elseif (strpos($param, 'small') !== false) {      // small
-            $width = 255;
-            $height = 143;
-        } elseif (strpos($param, 'large') !== false) {      // large
-            $width = 520;
-            $height = 293;
-        } else {                                          // medium
-            $width = 425;
-            $height = 239;
-        }
+        list($vid, $pstr) = array_pad(explode('?', $vid, 2), 2, '');
+        parse_str($pstr, $userparams);
+        list($width, $height) = $this->parseSize($userparams);
 
-        $paramm = array();
-        parse_str($param, $paramm);
-        $urlparam = array();
-        foreach ($paramm as $key => $value) {
-            switch ($key) {
-                case 'list':
-                    if (preg_match('/^[-\w]+$/', $value)) {
-                        $urlparam[] = $key . '=' . $value;
-                    }
-                    break;
-                case 'rel':
-                case 'autoplay':
-                case 'ap':
-                    if ($paramm[$key] === '1' || $paramm[$key] === '0') {
-                        $urlparam[] = $key . '=' . $paramm[$key];
-                    }
-                    break;
-                case 'start':
-                case 'st': // for microsoftstream.com
-                case 'end':
-                case 'chapter_id': //for twitch.tv
-                case 'initial_time':
-                case 'offsetTime':
-                case 'startSlide':
-                    $number = (int)$paramm[$key];
-                    if ($number > 0) {
-                        $urlparam[] = $key . '=' . $number;
-                    }
-                    break;
-                case 'auto_start':
-                    if ($paramm[$key] === 'true' || $paramm[$key] === 'false') {
-                        $urlparam[] = $key . '=' . $paramm[$key];
-                    }
-                    break;
-            }
-        }
+        // get URL
+        $url = $this->insertPlaceholders($this->sites[$site], $vid, $width, $height);
+        list($url, $urlpstr) = array_pad(explode('?', $url, 2), 2, '');
+        parse_str($urlpstr, $urlparams);
 
-        list($type, $url) = explode(' ', $this->sites[$site], 2);
-        $url = trim($url);
-        $type = trim($type);
-        $url = str_replace('@VIDEO@', rawurlencode($vid), $url);
-        $url = str_replace('@WIDTH@', $width, $url);
-        $url = str_replace('@HEIGHT@', $height, $url);
-        if (count($urlparam)) {
-            if (strpos($url, '?') !== false) {
-                $sepchar = '&';
-            } else {
-                $sepchar = '?';
-            }
-            $url .= $sepchar . implode('&', $urlparam);
-        }
-
-        list(, $vars) = explode('?', $url, 2);
-        $varr = array();
-        parse_str($vars, $varr);
+        // merge parameters
+        $params = array_merge($urlparams, $userparams);
+        $url = $url . '?' . buildURLparams($params, '&');
 
         return array(
             'site' => $site,
             'video' => $vid,
             'url' => $url,
-            'vars' => $varr,
-            'align' => $align,
+            'align' => $this->alignments[$align],
             'width' => $width,
             'height' => $height,
             'title' => $title,
-            'type' => $type,
         );
     }
 
@@ -155,15 +110,11 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
         if ($mode != 'xhtml') return false;
         if (is_null($data)) return false;
 
-        if ($data['align'] == 0) $align = 'none';
-        if ($data['align'] == 1) $align = 'right';
-        if ($data['align'] == 2) $align = 'left';
-        if ($data['align'] == 3) $align = 'center';
         if ($data['title']) $title = ' title="' . hsc($data['title']) . '"';
 
         if (is_a($R, 'renderer_plugin_dw2pdf')) {
             // Output for PDF renderer
-            $R->doc .= '<div class="vshare__' . $align . '"
+            $R->doc .= '<div class="vshare__' . $data['align'] . '"
                              width="' . $data['width'] . '"
                              height="' . $data['height'] . '">';
 
@@ -185,12 +136,57 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
                 'src' => $data['url'],
                 'height' => $data['height'],
                 'width' => $data['width'],
-                'class' => 'vshare__' . $align,
+                'class' => 'vshare__' . $data['align'],
                 'allowfullscreen' => '',
                 'frameborder' => 0,
                 'scrolling' => 'no',
             ));
             $R->doc .= '>' . hsc($data['title']) . '</iframe>';
         }
+    }
+
+    /**
+     * Fill the placeholders in the given URL
+     *
+     * @param string $url
+     * @param string $vid
+     * @param int|string $width
+     * @param int|string $height
+     * @return string
+     */
+    public function insertPlaceholders($url, $vid, $width, $height)
+    {
+        global $INPUT;
+        $url = str_replace('@VIDEO@', rawurlencode($vid), $url);
+        $url = str_replace('@DOMAIN@', rawurlencode($INPUT->str('HTTP_HOST')), $url);
+        $url = str_replace('@WIDTH@', $width, $url);
+        $url = str_replace('@HEIGHT@', $height, $url);
+
+        return $url;
+    }
+
+    /**
+     * Extract the wanted size from the parameter list
+     *
+     * @param array $params
+     * @return int[]
+     */
+    public function parseSize(&$params)
+    {
+        $known = join('|', array_keys($this->sizes));
+
+        foreach ($params as $key => $value) {
+            if (preg_match("/^((\d+)x(\d+))|($known)\$/i", $key, $m)) {
+                unset($params[$key]);
+                if (isset($m[4])) {
+                    return $this->sizes[strtolower($m[4])];
+                } else {
+                    return [$m[2], $m[3]];
+                }
+            }
+        }
+
+        // default
+        return $this->sizes['medium'];
     }
 }
