@@ -1,15 +1,15 @@
 .vshare {
     aspect-ratio: 16/9;
-}
-
-div.vshare {
-    box-sizing: border-box;
-    border: 1px solid __border__;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+div.vshare {
+    box-sizing: border-box;
+    border: 1px solid __border__;
     cursor: pointer;
     background-image: url(video.svg);
     background-position: top left;
@@ -34,7 +34,6 @@ div.vshare__center {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    display: block;
 }
 
 iframe.vshare__none,
