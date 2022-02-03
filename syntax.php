@@ -179,31 +179,18 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
 
             $R->doc .= '</div>';
         } else {
-            // Normal output
-            if ($data['type'] == 'flash') {
-                // embed flash
-                $R->doc .= '<div class="vshare__' . $align . '"' . $title . '>';
-                $R->doc .= html_flashobject(
-                    $data['url'],
-                    $data['width'],
-                    $data['height'],
-                    $data['vars'],
-                    $data['vars']);
-                $R->doc .= '</div>';
-            } else {
-                // embed iframe
-                $R->doc .= '<iframe ';
-                $R->doc .= buildAttributes(array(
-                    'src' => $data['url'],
-                    'height' => $data['height'],
-                    'width' => $data['width'],
-                    'class' => 'vshare__' . $align,
-                    'allowfullscreen' => '',
-                    'frameborder' => 0,
-                    'scrolling' => 'no',
-                ));
-                $R->doc .= '>' . hsc($data['title']) . '</iframe>';
-            }
+            // embed iframe
+            $R->doc .= '<iframe ';
+            $R->doc .= buildAttributes(array(
+                'src' => $data['url'],
+                'height' => $data['height'],
+                'width' => $data['width'],
+                'class' => 'vshare__' . $align,
+                'allowfullscreen' => '',
+                'frameborder' => 0,
+                'scrolling' => 'no',
+            ));
+            $R->doc .= '>' . hsc($data['title']) . '</iframe>';
         }
     }
 }
