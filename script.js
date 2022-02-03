@@ -1,12 +1,13 @@
-
 /**
  * Append a toolbar button
  */
-if(window.toolbar != undefined){
-    toolbar[toolbar.length] = {"type":  "pluginvshare",
-                               "title": LANG['plugins']['vshare']['button'],
-                               "icon":  "../../plugins/vshare/button.png",
-                               "key":   ""};
+if (window.toolbar != undefined) {
+    toolbar[toolbar.length] = {
+        "type": "pluginvshare",
+        "title": LANG['plugins']['vshare']['button'],
+        "icon": "../../plugins/vshare/button.png",
+        "key": ""
+    };
 }
 
 /**
@@ -32,7 +33,7 @@ var PluginVShare = {
 
         for (var key in sites) {
 
-            if(sites.hasOwnProperty(key)) {
+            if (sites.hasOwnProperty(key)) {
                 var RE = new RegExp(sites[key], 'i');
                 var match = text.match(RE);
                 if (match) {
@@ -42,7 +43,7 @@ var PluginVShare = {
                     switch (key) {
                         case 'slideshare':
                             //provided video url?
-                            if(match[2]) {
+                            if (match[2]) {
 
                                 jQuery.ajax({
                                     url: '//www.slideshare.net/api/oembed/2',
@@ -68,7 +69,7 @@ var PluginVShare = {
                             break;
                         case 'bliptv':
                             //provided video url?
-                            if(match[2]) {
+                            if (match[2]) {
 
                                 jQuery.ajax({
                                     url: '//blip.tv/oembed/',
@@ -108,7 +109,7 @@ var PluginVShare = {
         alert(LANG['plugins']['vshare']['notfound']);
     },
 
-    insert: function(key, videoid, urlparam, edid) {
+    insert: function (key, videoid, urlparam, edid) {
         var code = '{{' + key + '>' + videoid + '?medium' + urlparam + '}}';
         insertAtCarret(PluginVShare.edid, code);
     }
