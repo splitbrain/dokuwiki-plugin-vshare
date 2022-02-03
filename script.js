@@ -30,56 +30,15 @@ const PluginVShare = {
         const text = prompt(LANG['plugins']['vshare']['prompt']);
         if (!text) return;
 
-        // This includes the site patterns:
-        /* DOKUWIKI:include sites.js */
-
-        for (let key in sites) {
-
-            if (sites.hasOwnProperty(key)) {
-                const RE = new RegExp(sites[key], 'i');
+        for (const [site, rex] of Object.entries(JSINFO.plugins.vshare)) {
+                const RE = new RegExp(rex, 'i');
                 const match = text.match(RE);
                 if (match) {
-                    let urlparam = '';
-                    let videoid = match[1];
-
-                    switch (key) {
-                        case 'slideshare':
-                            //provided video url?
-                            if (match[2]) {
-
-                                jQuery.ajax({
-                                    url: '//www.slideshare.net/api/oembed/2',
-                                    dataType: 'jsonp',
-                                    data: {
-                                        url: match[2],
-                                        format: 'jsonp'
-                                    }
-                                }).done(function (response, status, error) {
-                                    const videoid = response.slideshow_id;
-                                    PluginVShare.insert(key, videoid, urlparam);
-                                }).fail(function (data, status, error) {
-                                    /* http://www.slideshare.net/developers/oembed
-                                     * If not found, an status 200 with response {error:true} is returned,
-                                     * but "Content-Type:application/javascript; charset=utf-8" is then
-                                     * wrongly changed to "Content-Type:application/json; charset=utf-8"
-                                     * so it throws a parseerror
-                                     */
-                                    alert(LANG['plugins']['vshare']['notfound']);
-                                });
-                                return;
-                            }
-                            break;
-                        case 'twitchtv':
-                            if (match[2]) {
-                                urlparam = 'chapter_id=' + match[2];
-                            }
-                            break;
-                    }
-
-                    PluginVShare.insert(key, videoid, urlparam);
+                    const urlparam = '';
+                    const videoid = match[1];
+                    PluginVShare.insert(site, videoid, urlparam);
                     return;
                 }
-            }
         }
 
         alert(LANG['plugins']['vshare']['notfound']);
@@ -93,7 +52,7 @@ const PluginVShare = {
      * @param {string} urlparam
      */
     insert: function (key, videoid, urlparam) {
-        var code = '{{' + key + '>' + videoid + '?' + urlparam + '}}';
+        const code = '{{' + key + '>' + videoid + '?' + urlparam + '}}';
         insertAtCarret(PluginVShare.edid, code);
     },
 

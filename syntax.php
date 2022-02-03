@@ -31,7 +31,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
      */
     public function __construct()
     {
-        $this->sites = confToHash(dirname(__FILE__) . '/sites.conf');
+        $this->sites = parse_ini_file(__DIR__ . '/sites.ini', true, INI_SCANNER_RAW);
     }
 
     /** @inheritdoc */
@@ -85,7 +85,7 @@ class syntax_plugin_vshare extends DokuWiki_Syntax_Plugin
         list($width, $height) = $this->parseSize($userparams);
 
         // get URL
-        $url = $this->insertPlaceholders($this->sites[$site], $vid, $width, $height);
+        $url = $this->insertPlaceholders($this->sites[$site]['url'], $vid, $width, $height);
         list($url, $urlpstr) = array_pad(explode('?', $url, 2), 2, '');
         parse_str($urlpstr, $urlparams);
 

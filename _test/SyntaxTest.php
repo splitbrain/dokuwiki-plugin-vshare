@@ -60,6 +60,7 @@ class SyntaxTest extends DokuWikiTest
                 '{{youtube>L-WM8YxwqEU}}',
                 [
                     'site' => 'youtube',
+                    'domain' => 'www.youtube-nocookie.com',
                     'video' => 'L-WM8YxwqEU',
                     'url' => '//www.youtube-nocookie.com/embed/L-WM8YxwqEU?',
                     'align' => 'none',
@@ -72,6 +73,7 @@ class SyntaxTest extends DokuWikiTest
                 '{{youtube>L-WM8YxwqEU?small&start=30&end=45|A random segment of 15 seconds}}',
                 [
                     'site' => 'youtube',
+                    'domain' => 'www.youtube-nocookie.com',
                     'video' => 'L-WM8YxwqEU',
                     'url' => '//www.youtube-nocookie.com/embed/L-WM8YxwqEU?start=30&end=45',
                     'align' => 'none',
