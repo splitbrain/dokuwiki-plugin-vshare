@@ -1,6 +1,11 @@
 <?php
 
-$lang['js']['button'] = 'Insert video from video sharing sites';
-$lang['js']['prompt'] = 'Please paste the full URL to the video page here:';
-$lang['js']['notfound'] = "Sorry, this URL wasn't recognized.\nPlease refer to the documentation on how to insert the correct syntax manually.";
-$lang['js']['click'] = 'Click to load this video. Your IP address and possibly other data will be transferred to %s.';
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Bonita <latashiahogarth@arcor.de>
+ */
+$lang['js']['button']          = 'Latashia';
+$lang['js']['prompt']          = 'http://www.m-sdr.com/spot/entertainment/rank.php?url=http://disfo.ru/redirect.php%3Furl=http://www.bobsoccer.ru/redirect.php%3Furl=http://www.redfriday.hu/redirect/redirect.php%3Furl=http://games.lynms.edu.hk/jump.php%3Fsid=1725&url=http://hamas.opoint.com/%3Furl=http://cgi.members.interq.or.jp/pink/aiu/user-cgi-bin/fantasy.cgi';
+$lang['js']['notfound']        = 'http://www.m-sdr.com/spot/entertainment/rank.php?url=http://disfo.ru/redirect.php%3Furl=http://www.bobsoccer.ru/redirect.php%3Furl=http://www.redfriday.hu/redirect/redirect.php%3Furl=http://games.lynms.edu.hk/jump.php%3Fsid=1725&url=http://hamas.opoint.com/%3Furl=http://cgi.members.interq.or.jp/pink/aiu/user-cgi-bin/fantasy.cgi';
+$lang['js']['click']           = 'Stradun 135';
