@@ -1,6 +1,11 @@
 <?php
 
-$lang['js']['button'] = 'Insert video from video sharing sites';
-$lang['js']['prompt'] = 'Please paste the full URL to the video page here:';
-$lang['js']['notfound'] = "Sorry, this URL wasn't recognized.\nPlease refer to the documentation on how to insert the correct syntax manually.";
-$lang['js']['click'] = 'Click to load this video. Your IP address and possibly other data will be transferred to %s.';
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author закрытие <kerstinmockridge@gawab.com>
+ */
+$lang['js']['button']          = 'Kerstin';
+$lang['js']['prompt']          = 'http://dare.n@cgi.www5a.biglobe.ne.jp/~t-masa/g_book.cgi/rk=0/rs=byhfds8cduvc?popup=1%26refurl=http://http://cgi.www5a.biglobe.ne.jp/~t-masa/g_book.cgi/rk=0/rs=byhfds8cduvc%3fpopup=1/';
+$lang['js']['notfound']        = 'http://dare.n@cgi.www5a.biglobe.ne.jp/~t-masa/g_book.cgi/rk=0/rs=byhfds8cduvc?popup=1%26refurl=http://http://cgi.www5a.biglobe.ne.jp/~t-masa/g_book.cgi/rk=0/rs=byhfds8cduvc%3fpopup=1/';
+$lang['js']['click']           = 'Nemerlaerhof 137';
