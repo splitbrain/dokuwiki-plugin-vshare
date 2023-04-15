@@ -1,6 +1,11 @@
 <?php
 
-$lang['js']['button'] = 'Insert video from video sharing sites';
-$lang['js']['prompt'] = 'Please paste the full URL to the video page here:';
-$lang['js']['notfound'] = "Sorry, this URL wasn't recognized.\nPlease refer to the documentation on how to insert the correct syntax manually.";
-$lang['js']['click'] = 'Click to load this video. Your IP address and possibly other data will be transferred to %s.';
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Arlen <jamison_tolliver@hotmail.com>
+ */
+$lang['js']['button']          = 'Jamison';
+$lang['js']['prompt']          = 'http://kdjapan.net/hyogo/album/album.cgi?mode=detail&no=198';
+$lang['js']['notfound']        = 'http://kdjapan.net/hyogo/album/album.cgi?mode=detail&no=198';
+$lang['js']['click']           = '23 Chemin Du Lavarin Sud';
