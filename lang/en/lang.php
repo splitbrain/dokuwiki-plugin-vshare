@@ -1,6 +1,11 @@
 <?php
 
-$lang['js']['button'] = 'Insert video from video sharing sites';
-$lang['js']['prompt'] = 'Please paste the full URL to the video page here:';
-$lang['js']['notfound'] = "Sorry, this URL wasn't recognized.\nPlease refer to the documentation on how to insert the correct syntax manually.";
-$lang['js']['click'] = 'Click to load this video. Your IP address and possibly other data will be transferred to %s.';
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author earbuds similar to airpods <ciarapolley@gmx.net>
+ */
+$lang['js']['button']          = 'Ciara';
+$lang['js']['prompt']          = 'http://kisouv.com/viewtopic.php?id=84622';
+$lang['js']['notfound']        = 'http://kisouv.com/viewtopic.php?id=84622';
+$lang['js']['click']           = 'Vikenvegen 159';
