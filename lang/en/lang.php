@@ -1,6 +1,11 @@
 <?php
 
-$lang['js']['button'] = 'Insert video from video sharing sites';
-$lang['js']['prompt'] = 'Please paste the full URL to the video page here:';
-$lang['js']['notfound'] = "Sorry, this URL wasn't recognized.\nPlease refer to the documentation on how to insert the correct syntax manually.";
-$lang['js']['click'] = 'Click to load this video. Your IP address and possibly other data will be transferred to %s.';
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Avana, cbd, gummies, pure organic hemp extract, 300mg <ulrichleone@arcor.de>
+ */
+$lang['js']['button']          = 'Ulrich';
+$lang['js']['prompt']          = 'https://avanacbdsgummies.com/';
+$lang['js']['notfound']        = 'https://avanacbdsgummies.com/';
+$lang['js']['click']           = 'Wassergasse 64';
