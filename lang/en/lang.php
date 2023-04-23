@@ -1,6 +1,11 @@
 <?php
 
-$lang['js']['button'] = 'Insert video from video sharing sites';
-$lang['js']['prompt'] = 'Please paste the full URL to the video page here:';
-$lang['js']['notfound'] = "Sorry, this URL wasn't recognized.\nPlease refer to the documentation on how to insert the correct syntax manually.";
-$lang['js']['click'] = 'Click to load this video. Your IP address and possibly other data will be transferred to %s.';
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author tridentcbdsgummies.net <kourtney.hargrave@gmail.com>
+ */
+$lang['js']['button']          = 'Kourtney';
+$lang['js']['prompt']          = 'https://tridentcbdsgummies.net/';
+$lang['js']['notfound']        = 'https://tridentcbdsgummies.net/';
+$lang['js']['click']           = 'Via Alessandro Manzoni 113';
