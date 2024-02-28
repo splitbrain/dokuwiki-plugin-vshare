@@ -127,18 +127,24 @@ class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
      */
     public function iframe($data, $element = 'iframe')
     {
+        $attributes = [
+            'src' => $data['url'],
+            'width' => $data['width'],
+            'height' => $data['height'],
+            'style' => $this->sizeToStyle($data['width'], $data['height']),
+            'class' => 'vshare vshare__' . $data['align'],
+            'allowfullscreen' => '',
+            'frameborder' => 0,
+            'scrolling' => 'no',
+            'data-domain' => $data['domain'],
+            'referrerpolicy' => 'no-referrer',
+        ];
+        if($this->getConf('extrahard')) {
+            $attributes = array_merge($attributes, $this->hardenedIframeAttributes());
+        }
+
         return "<$element "
-            . buildAttributes(array(
-                'src' => $data['url'],
-                'width' => $data['width'],
-                'height' => $data['height'],
-                'style' => $this->sizeToStyle($data['width'], $data['height']),
-                'class' => 'vshare vshare__' . $data['align'],
-                'allowfullscreen' => '',
-                'frameborder' => 0,
-                'scrolling' => 'no',
-                'data-domain' => $data['domain'],
-            ))
+            . buildAttributes($attributes)
             . '><h3>' . hsc($data['title']) . "</h3></$element>";
     }
 
@@ -236,5 +242,59 @@ class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
 
         // default
         return $this->sizes['medium'];
+    }
+
+    /**
+     * Get additional attributes to set on the iframe to harden
+     *
+     * @link https://dustri.org/b/youtube-video-embedding-harm-reduction.html
+     * @return array
+     */
+    protected function hardenedIframeAttributes()
+    {
+        $disallow = [
+            'accelerometer',
+            'ambient-light-sensor',
+            'autoplay',
+            'battery',
+            'browsing-topics',
+            'camera',
+            'display-capture',
+            'domain-agent',
+            'document-domain',
+            'encrypted-media',
+            'execution-while-not-rendered',
+            'execution-while-out-of-viewport',
+            'gamepad',
+            'geolocation',
+            'gyroscope',
+            'hid',
+            'identity-credentials-get',
+            'idle-detection',
+            'local-fonts',
+            'magnetometer',
+            'microphone',
+            'midi',
+            'otp-credentials',
+            'payment',
+            'picture-in-picture',
+            'publickey-credentials-create',
+            'publickey-credentials-get',
+            'screen-wake-lock',
+            'serial',
+            'speaker-selection',
+            'usb',
+            'window-management',
+            'xr-spatial-tracking',
+        ];
+
+        $disallow = join('; ', array_map(static fn($v) => "$v 'none'", $disallow));
+
+        return [
+            'credentialless' => '',
+            'sandbox' => 'allow-scripts allow-same-origin',
+            'allow' => $disallow,
+            'csp' => 'sandbox allow-scripts allow-same-origin'
+        ];
     }
 }

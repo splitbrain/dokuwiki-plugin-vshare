@@ -7,5 +7,6 @@
 
 
 $meta['gdpr'] = array('onoff');
+$meta['extrahard'] = array('onoff');
 $meta['debug'] = array('onoff');
 
