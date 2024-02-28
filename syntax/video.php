@@ -140,6 +140,7 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
             'scrolling' => 'no',
             'data-domain' => $data['domain'],
             'referrerpolicy' => 'no-referrer',
+            'loading' => 'lazy',
         ];
         if ($this->getConf('extrahard')) {
             $attributes = array_merge($attributes, $this->hardenedIframeAttributes());
