@@ -1,12 +1,14 @@
 <?php
 
+use dokuwiki\Extension\SyntaxPlugin;
+
 /**
  * Easily embed videos from various Video Sharing sites
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
+class syntax_plugin_vshare_video extends SyntaxPlugin
 {
     protected $sites;
 
@@ -55,7 +57,7 @@ class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        $pattern = join('|', array_keys($this->sites));
+        $pattern = implode('|', array_keys($this->sites));
         $this->Lexer->addSpecialPattern('\{\{\s?(?:' . $pattern . ')>[^}]*\}\}', $mode, 'plugin_vshare_video');
     }
 
@@ -65,35 +67,35 @@ class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
         $command = substr($match, 2, -2);
 
         // title
-        list($command, $title) = array_pad(explode('|', $command), 2, '');
+        [$command, $title] = sexplode('|', $command, 2, '');
         $title = trim($title);
 
         // alignment
         $align = 0;
-        if (substr($command, 0, 1) == ' ') $align += 1;
+        if (substr($command, 0, 1) == ' ') ++$align;
         if (substr($command, -1) == ' ') $align += 2;
         $command = trim($command);
 
         // get site and video
-        list($site, $vid) = explode('>', $command);
+        [$site, $vid] = explode('>', $command);
         if (!$this->sites[$site]) return null; // unknown site
         if (!$vid) return null; // no video!?
 
         // what size?
-        list($vid, $pstr) = array_pad(explode('?', $vid, 2), 2, '');
+        [$vid, $pstr] = sexplode('?', $vid, 2, '');
         parse_str($pstr, $userparams);
-        list($width, $height) = $this->parseSize($userparams);
+        [$width, $height] = $this->parseSize($userparams);
 
         // get URL
         $url = $this->insertPlaceholders($this->sites[$site]['url'], $vid, $width, $height);
-        list($url, $urlpstr) = array_pad(explode('?', $url, 2), 2, '');
+        [$url, $urlpstr] = sexplode('?', $url, 2, '');
         parse_str($urlpstr, $urlparams);
 
         // merge parameters
         $params = array_merge($urlparams, $userparams);
         $url = $url . '?' . buildURLparams($params, '&');
 
-        return array(
+        return [
             'site' => $site,
             'domain' => parse_url($url, PHP_URL_HOST),
             'video' => $vid,
@@ -101,8 +103,8 @@ class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
             'align' => $this->alignments[$align],
             'width' => $width,
             'height' => $height,
-            'title' => $title,
-        );
+            'title' => $title
+        ];
     }
 
     /** @inheritdoc */
@@ -139,7 +141,7 @@ class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
             'data-domain' => $data['domain'],
             'referrerpolicy' => 'no-referrer',
         ];
-        if($this->getConf('extrahard')) {
+        if ($this->getConf('extrahard')) {
             $attributes = array_merge($attributes, $this->hardenedIframeAttributes());
         }
 
@@ -159,11 +161,11 @@ class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
     {
         // no unit? use px
         if ($width && $width == (int)$width) {
-            $width = $width . 'px';
+            $width .= 'px';
         }
         // no unit? use px
         if ($height && $height == (int)$height) {
-            $height = $height . 'px';
+            $height .= 'px';
         }
 
         $style = '';
@@ -227,9 +229,9 @@ class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
      */
     public function parseSize(&$params)
     {
-        $known = join('|', array_keys($this->sizes));
+        $known = implode('|', array_keys($this->sizes));
 
-        foreach ($params as $key => $value) {
+        foreach (array_keys($params) as $key) {
             if (preg_match("/^((\d+)x(\d+))|($known)\$/i", $key, $m)) {
                 unset($params[$key]);
                 if (isset($m[4])) {
@@ -288,7 +290,7 @@ class syntax_plugin_vshare_video extends DokuWiki_Syntax_Plugin
             'xr-spatial-tracking',
         ];
 
-        $disallow = join('; ', array_map(static fn($v) => "$v 'none'", $disallow));
+        $disallow = implode('; ', array_map(static fn($v) => "$v 'none'", $disallow));
 
         return [
             'credentialless' => '',

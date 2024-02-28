@@ -1,11 +1,14 @@
 <?php
+
+use dokuwiki\Extension\SyntaxPlugin;
+
 /**
  * DokuWiki Plugin vshare (Syntax Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-class syntax_plugin_vshare_debug extends \dokuwiki\Extension\SyntaxPlugin
+class syntax_plugin_vshare_debug extends SyntaxPlugin
 {
     /** @inheritDoc */
     public function getType()
@@ -28,10 +31,9 @@ class syntax_plugin_vshare_debug extends \dokuwiki\Extension\SyntaxPlugin
     /** @inheritDoc */
     public function connectTo($mode)
     {
-        if($this->getConf('debug')) {
+        if ($this->getConf('debug')) {
             $this->Lexer->addSpecialPattern('~~vshare-debug~~', $mode, 'plugin_vshare_debug');
         }
-
     }
 
     /** @inheritDoc */
@@ -57,7 +59,7 @@ class syntax_plugin_vshare_debug extends \dokuwiki\Extension\SyntaxPlugin
         foreach ($sites as $site => $info) {
             $renderer->header($site, 2, 0);
 
-            if(!empty($info['vid'])) {
+            if (!empty($info['vid'])) {
                 $data = $syntax->handle("{{ $site>{$info['vid']} }}", DOKU_LEXER_MATCHED, 0, $handler);
                 $syntax->render($mode, $renderer, $data);
             } else {
@@ -67,7 +69,7 @@ class syntax_plugin_vshare_debug extends \dokuwiki\Extension\SyntaxPlugin
                 $renderer->p_close();
             }
 
-            if(!empty($info['web'])) {
+            if (!empty($info['web'])) {
                 $renderer->p_open();
                 $renderer->externallink($info['web']);
                 $renderer->p_close();
@@ -77,10 +79,8 @@ class syntax_plugin_vshare_debug extends \dokuwiki\Extension\SyntaxPlugin
                 $renderer->cdata(' No sample video available');
                 $renderer->p_close();
             }
-
         }
 
         return true;
     }
 }
-

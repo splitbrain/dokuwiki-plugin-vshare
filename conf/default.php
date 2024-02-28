@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Default settings for the vshare plugin
  *
@@ -8,4 +9,3 @@
 $conf['gdpr'] = 0;
 $conf['extrahard'] = 0;
 $conf['debug'] = 0;
-

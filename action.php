@@ -1,29 +1,31 @@
 <?php
 
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\Extension\Event;
+
 /**
  * DokuWiki Plugin vshare (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-class action_plugin_vshare extends \dokuwiki\Extension\ActionPlugin
+class action_plugin_vshare extends ActionPlugin
 {
-
     /** @inheritDoc */
-    public function register(Doku_Event_Handler $controller)
+    public function register(EventHandler $controller)
     {
         $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'addSites');
-
     }
 
     /**
      * Add the site regexes
      *
-     * @param Doku_Event $event event object by reference
+     * @param Event $event event object by reference
      * @param mixed $param optional parameter passed when event was registered
      * @return void
      */
-    public function addSites(Doku_Event $event, $param)
+    public function addSites(Event $event, $param)
     {
         global $JSINFO;
 
@@ -37,6 +39,4 @@ class action_plugin_vshare extends \dokuwiki\Extension\ActionPlugin
 
         $JSINFO['plugins']['vshare'] = $js;
     }
-
 }
-
