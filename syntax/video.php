@@ -139,7 +139,6 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
             'frameborder' => 0,
             'scrolling' => 'no',
             'data-domain' => $data['domain'],
-            'referrerpolicy' => 'no-referrer',
             'loading' => 'lazy',
         ];
         if ($this->getConf('extrahard')) {
@@ -297,7 +296,8 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
             'credentialless' => '',
             'sandbox' => 'allow-scripts allow-same-origin',
             'allow' => $disallow,
-            'csp' => 'sandbox allow-scripts allow-same-origin'
+            'csp' => 'sandbox allow-scripts allow-same-origin',
+            'referrerpolicy' => 'no-referrer',
         ];
     }
 }
