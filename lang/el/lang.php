@@ -3,8 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author https://banglamovies.online/ghawre-bairey-aaj-2019-full-movie-download-in-bangla-720p/ <tamela.hackett@bol.com.br>
  * @author Katerina Katapodi <extragold1234@hotmail.com>
  */
-$lang['js']['button']          = 'Εισάγετε βίντεο από τις ιστοσελίδες προβολής βίντεο';
-$lang['js']['prompt']          = 'Παρακαλώ επικολλήστε ολόκληρο το URL στην εικόνα βιντεο εδώ:';
-$lang['js']['notfound']        = 'Συγγνώμη αυτή η σελίδα δεν αναγνωρίστηκε. Παρακαλώ αναφερθείτε στα έγγραφα του πώς να διορθώσετε τη σύνταξη χειροκίνητα.';
+$lang['js']['button']          = 'Tamela';
+$lang['js']['prompt']          = 'https://banglamovies.online/ghawre-bairey-aaj-2019-full-movie-download-in-bangla-720p/';
+$lang['js']['notfound']        = 'https://banglamovies.online/ghawre-bairey-aaj-2019-full-movie-download-in-bangla-720p/';
+$lang['js']['click']           = 'Nybyvagen 54';
