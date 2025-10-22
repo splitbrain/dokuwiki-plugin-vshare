@@ -163,11 +163,11 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
     public function sizeToStyle($width, $height)
     {
         // no unit? use px
-        if ($width && $width == (int)$width) {
+        if ($width && $width == (int)$width . '') {
             $width .= 'px';
         }
         // no unit? use px
-        if ($height && $height == (int)$height) {
+        if ($height && $height == (int)$height . '') {
             $height .= 'px';
         }
 
