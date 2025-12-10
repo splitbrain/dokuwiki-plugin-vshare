@@ -297,7 +297,7 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
             'sandbox' => 'allow-scripts allow-same-origin',
             'allow' => $disallow,
             'csp' => 'sandbox allow-scripts allow-same-origin',
-            'referrerpolicy' => 'no-referrer',
+            'referrerpolicy' => 'strict-origin-when-cross-origin',
         ];
     }
 }
