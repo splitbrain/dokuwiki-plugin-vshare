@@ -85,6 +85,7 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
         [$vid, $pstr] = sexplode('?', $vid, 2, '');
         parse_str($pstr, $userparams);
         [$width, $height] = $this->parseSize($userparams);
+        [$aspect_w, $aspect_h] =  $this->parseAspect($userparams);
 
         // get URL
         $url = $this->insertPlaceholders($this->sites[$site]['url'], $vid, $width, $height);
@@ -103,7 +104,9 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
             'align' => $this->alignments[$align],
             'width' => $width,
             'height' => $height,
-            'title' => $title
+            'title' => $title,
+            'aspect_w' => $aspect_w,
+            'aspect_h' => $aspect_h
         ];
     }
 
@@ -133,7 +136,7 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
             'src' => $data['url'],
             'width' => $data['width'],
             'height' => $data['height'],
-            'style' => $this->sizeToStyle($data['width'], $data['height']),
+            'style' => $this->sizeToStyle($data['width'], $data['height']) . $this->aspectToStyle($data['aspect_w'], $data['aspect_h']),
             'class' => 'vshare vshare__' . $data['align'],
             'allowfullscreen' => '',
             'frameborder' => 0,
@@ -160,11 +163,11 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
     public function sizeToStyle($width, $height)
     {
         // no unit? use px
-        if ($width && $width == (int)$width) {
+        if ($width && $width == (int)$width . '') {
             $width .= 'px';
         }
         // no unit? use px
-        if ($height && $height == (int)$height) {
+        if ($height && $height == (int)$height . '') {
             $height .= 'px';
         }
 
@@ -173,6 +176,24 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
         if ($height) $style .= 'height:' . $height . ';';
         return $style;
     }
+
+    /**
+     * Create a style attribute for the given size
+     *
+     * @param int|string $width
+     * @param int|string $height
+     * @return string
+     */
+    public function aspectToStyle($w, $h)
+    {
+        $style = '';
+        if ($w > 0 && $h > 0) {
+            $style .= 'aspect-ratio:' . $w . '/' . $h . '; height: unset';
+        }
+        return $style;
+    }
+
+
 
     /**
      * Prepare the HTML for output in PDF exports
@@ -244,6 +265,27 @@ class syntax_plugin_vshare_video extends SyntaxPlugin
 
         // default
         return $this->sizes['medium'];
+    }
+
+    /**
+     * Extract the wanted aspect from the parameter list
+     *
+     * @param array $params
+     * @return int[]
+     */
+    public function parseAspect(&$params)
+    {
+        foreach (array_keys($params) as $key) {
+            if (preg_match("/^((\d+):(\d+))\$/i", $key, $m)) {
+                unset($params[$key]);
+                if (isset($m[2]) && isset($m[3])) {
+                    return [$m[2], $m[3]];
+                } else {
+                    return [];
+                }
+            }
+        }
+        return [];
     }
 
     /**
